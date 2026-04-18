@@ -1,0 +1,1 @@
+"use strict";(globalThis.webpackChunkal_khaliq_docs=globalThis.webpackChunkal_khaliq_docs||[]).push([[647],{7121:(a,s,e)=>{e.r(s),e.d(s,{default:()=>o});e(6540);var l=e(4164),r=e(7559),c=e(5500),h=e(2831),u=e(1656),i=e(4848);function o(a){return(0,i.jsx)(c.e3,{className:(0,l.A)(r.G.wrapper.docsPages),children:(0,i.jsx)(u.A,{children:(0,h.v)(a.route.routes)})})}}}]);
