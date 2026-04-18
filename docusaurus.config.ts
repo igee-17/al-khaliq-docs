@@ -70,10 +70,13 @@ const config: Config = {
         {
           title: 'Docs',
           items: [
-            { label: 'Getting started', to: '/getting-started/local-setup' },
-            { label: 'Architecture', to: '/architecture/module-layout' },
-            { label: 'Catalog', to: '/catalog/data-model' },
-            { label: 'AWS', to: '/aws/overview' },
+            { label: 'Getting started', to: '/getting-started' },
+            { label: 'Errors', to: '/errors' },
+            { label: 'Auth', to: '/category/auth' },
+            { label: 'Catalog', to: '/category/catalog' },
+            { label: 'Discovery', to: '/category/discovery' },
+            { label: 'Playback', to: '/category/playback' },
+            { label: 'Admin API', to: '/category/admin-api' },
           ],
         },
         {

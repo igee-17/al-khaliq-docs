@@ -1,8 +1,8 @@
 {
   "label": "Catalog",
-  "position": 4,
+  "position": 5,
   "link": {
     "type": "generated-index",
-    "description": "Artists, albums, songs, genres; the upload + transcode pipeline; HLS playback; play counts."
+    "description": "Read endpoints for songs, artists, albums, and genres. Public-safe shapes — no backend internals."
   }
 }

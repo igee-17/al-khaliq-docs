@@ -1,0 +1,8 @@
+{
+  "label": "Discovery",
+  "position": 6,
+  "link": {
+    "type": "generated-index",
+    "description": "Home feed, explore, and search — the screens users land on before picking a song."
+  }
+}

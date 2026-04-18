@@ -1,8 +1,8 @@
 {
   "label": "Auth",
-  "position": 3,
+  "position": 4,
   "link": {
     "type": "generated-index",
-    "description": "User auth (email / Google / Apple), admin auth, JWT + rotating refresh tokens, CORS."
+    "description": "Mobile user authentication — signup, verify email, login, Google / Apple, refresh, logout, password reset."
   }
 }
