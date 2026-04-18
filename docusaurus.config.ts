@@ -11,11 +11,11 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://TODO-org.github.io',
-  baseUrl: '/al_khaliq_docs/',
+  url: 'https://igee-17.github.io',
+  baseUrl: '/al-khaliq-docs/',
 
-  organizationName: 'TODO-org',
-  projectName: 'al_khaliq_docs',
+  organizationName: 'igee-17',
+  projectName: 'al-khaliq-docs',
 
   onBrokenLinks: 'throw',
 
@@ -58,7 +58,7 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/TODO-org/al_khaliq_backend',
+          href: 'https://github.com/igee-17/al-khaliq-backend',
           label: 'Backend repo',
           position: 'right',
         },
@@ -81,11 +81,11 @@ const config: Config = {
           items: [
             {
               label: 'Backend',
-              href: 'https://github.com/TODO-org/al_khaliq_backend',
+              href: 'https://github.com/igee-17/al-khaliq-backend',
             },
             {
               label: 'Docs (this site)',
-              href: 'https://github.com/TODO-org/al_khaliq_docs',
+              href: 'https://github.com/igee-17/al-khaliq-docs',
             },
           ],
         },

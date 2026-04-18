@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:igee-17.github.io)",
+      "Bash(gh run *)",
+      "Bash(curl -s -o /tmp/live.html -w \"HTTP %{http_code}\\\\n\" https://igee-17.github.io/al-khaliq-docs/)",
+      "Bash(curl -s -o /tmp/live2.html -w \"HTTP %{http_code}\\\\n\" https://igee-17.github.io/al-khaliq-docs/)"
+    ]
+  }
+}
