@@ -5,7 +5,7 @@ slug: /
 
 # Al Khaliq Backend Docs
 
-This is the developer reference for the **Al Khaliq** music streaming platform backend — a NestJS + Prisma + PostgreSQL service that powers the iOS and Android apps.
+This is the developer reference for the **Al Khaliq** music streaming platform backend — a NestJS + Prisma+ PostgreSQL service that powers the iOS and Android apps.
 
 ## What you'll find here
 
