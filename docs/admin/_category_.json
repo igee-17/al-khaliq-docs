@@ -1,6 +1,6 @@
 {
   "label": "Admin API",
-  "position": 8,
+  "position": 9,
   "link": {
     "type": "generated-index",
     "description": "All /admin/* endpoints consumed by the web admin panel. Separate token namespace from mobile users."

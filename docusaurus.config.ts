@@ -76,6 +76,7 @@ const config: Config = {
             { label: 'Catalog', to: '/category/catalog' },
             { label: 'Discovery', to: '/category/discovery' },
             { label: 'Playback', to: '/category/playback' },
+            { label: 'Library', to: '/category/library' },
             { label: 'Admin API', to: '/category/admin-api' },
           ],
         },
