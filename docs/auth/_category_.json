@@ -1,0 +1,8 @@
+{
+  "label": "Auth",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "User auth (email / Google / Apple), admin auth, JWT + rotating refresh tokens, CORS."
+  }
+}

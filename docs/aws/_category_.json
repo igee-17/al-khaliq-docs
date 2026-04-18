@@ -1,0 +1,8 @@
+{
+  "label": "AWS",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "description": "Step-by-step setup for every AWS service the backend depends on."
+  }
+}
