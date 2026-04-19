@@ -38,13 +38,27 @@ Tap an album → `/albums/:id` detail.
 
 Up to 20 songs personalised for this user. The algorithm:
 
-1. **Personalised** — take songs by the user's top 10 primary artists (by plays last 30 days), excluding songs already played, ordered by `playCount DESC`.
+1. **Personalised** — take songs by the user's top 10 primary artists (by non-SKIPPED plays last 30 days), excluding songs already played, ordered by `playCount DESC`.
 2. **Editorial** — if fewer than 20 results, top up with admin-flagged `isEditorial` songs (ordered by `playCount DESC`).
-3. **Popular** — if still fewer than 20, top up with songs with the most plays in the last 7 days.
+3. **Popular** — if still fewer than 20, top up with songs with the most non-SKIPPED plays in the last 7 days.
 
-New users (no plays yet) go straight to editorial → popular. Returning users never see songs they've already played.
+New users (no plays yet) go straight to editorial → popular. Returning users never see songs they've already played via `THRESHOLD` / `COMPLETED` events.
 
-Songs the user has marked **[not interested](../library/not-interested.md)** are filtered out of every tier.
+### Exclusion set
+
+These are filtered out of every tier:
+
+- Songs with any `THRESHOLD` or `COMPLETED` [play event](../playback/play-events.md) (the user's already heard them).
+- Songs marked **[not interested](../library/not-interested.md)**.
+- Songs hit by the **over-skipped heuristic** (see below).
+
+A single `SKIPPED` event does **not** exclude — users may return to a song later. Only repeated skips do.
+
+#### Over-skipped heuristic
+
+A song that receives **≥ 3 `SKIPPED` events from the user in the last 30 days** is excluded from quick-picks (and [explore recommendations](./explore.md)). The threshold is rolling — skips older than 30 days age out.
+
+Note: because the unique key on `PlayEvent` is `(userId, songId, dayBucket, eventType)`, skipping the same song 5 times on the same day still only records **one** `SKIPPED` row for that day. The user has to skip on 3 separate days within the 30-day window to trigger the exclusion.
 
 **Requires:** Bearer.
 

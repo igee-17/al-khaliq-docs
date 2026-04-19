@@ -4,14 +4,14 @@ sidebar_position: 5
 
 # Cross-device "now playing" sync
 
-One row per user, last-writer-wins. Device A writes what's playing; Device B reads and resumes. No WebSockets, no push — the client reads on demand (e.g. when the user opens the Now Playing screen on a second device or taps a "Resume on this device" button).
+One row per user, last-writer-wins. Device A writes what's playing; Device B reads and resumes. State updates are pushed to every connected device via the [Socket.IO gateway](./realtime.md) — polling is a fallback for clients that can't hold a socket.
 
 ## Mental model
 
 - **Single row per user.** Not per-device. Writing from Device B silently overwrites whatever Device A wrote.
 - **Full-state-replace semantics.** Every `PUT` represents the client's complete intended state — fields omitted from the body reset to defaults, they do **not** preserve prior values.
 - **Queue lives here.** `queueSongIds` + `currentIndex` are synced. Shuffle order is encoded in the queue itself. Repeat mode stays client-local.
-- **Best-effort polling.** The client reads when it needs the state (app foregrounded, second device opened). There is no push — staleness is normal and the client uses `updatedAt` to decide what to show.
+- **Push + polling.** Real-time updates via [`/ws/playback`](./realtime.md). Clients that can't or choose not to maintain a socket fall back to reading `GET /playback/state` on app foreground / explicit resume.
 
 See [client vs server responsibilities](./client-server-split.md) for where this fits in the overall playback model.
 
@@ -168,6 +168,79 @@ curl -X PUT http://localhost:3000/api/v1/playback/state \
 
 ---
 
+## POST /playlists/:id/play and POST /albums/:id/play
+
+Atomic "play this whole playlist / album" helpers. The server:
+
+1. Resolves the playlist (ownership + visibility checks) or album.
+2. Filters to published + ready songs.
+3. Builds the queue per the shuffle/startIndex rules below.
+4. Upserts `PlaybackState` in one round-trip.
+5. Fans the new state out to every connected [Socket.IO client](./realtime.md).
+
+Saves the client from having to fetch detail + compose + `PUT /playback/state` in three steps.
+
+**Requires:** Bearer.
+
+### Request body (shared `PlayAllDto`)
+
+```ts
+{
+  shuffle?: boolean;      // default false
+  startIndex?: number;    // default 0 (play from the top)
+  deviceId?: string;      // optional label, max 80 chars
+}
+```
+
+### Queue-building rules
+
+| `shuffle` | `startIndex` | Resulting queue |
+|---|---|---|
+| `false` | `undefined` | Natural order. |
+| `false` | `k` | `songs[k]` at position 0; remaining songs stay in natural order after it (rotation). |
+| `true` | `undefined` | Full Fisher–Yates shuffle. |
+| `true` | `k` | `songs[k]` pinned at position 0; the rest is Fisher–Yates shuffled. |
+
+`startIndex` indexes into the **filtered** (published+ready) list, not the raw playlist. So if a playlist has `[a, unpublished, b, c]`, the filtered list is `[a, b, c]`, and `startIndex: 1` means start at `b`.
+
+### Response — 200 OK
+
+`PlaybackStateResponseDto` (same shape as `GET /playback/state`).
+
+### Edge cases
+
+| Case | Status |
+|---|---|
+| Playlist empty (or has no playable songs) | `400` |
+| Album has no published songs | `400` |
+| `startIndex` >= filtered-list length | `400` |
+| Playlist is another user's private playlist | `404` |
+| Album / playlist doesn't exist | `404` |
+
+### curl
+
+```bash
+# Play whole playlist in natural order
+curl -X POST http://localhost:3000/api/v1/playlists/7/play \
+  -H 'Authorization: Bearer <accessToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{}'
+
+# Tap "Shuffle play" on an album
+curl -X POST http://localhost:3000/api/v1/albums/4/play \
+  -H 'Authorization: Bearer <accessToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{"shuffle": true, "deviceId": "iPhone 15 Pro"}'
+
+# "Play from this track" inside a playlist detail
+curl -X POST http://localhost:3000/api/v1/playlists/7/play \
+  -H 'Authorization: Bearer <accessToken>' \
+  -H 'Content-Type: application/json' \
+  -d '{"startIndex": 2, "shuffle": true}'
+```
+
+---
+
 ## DELETE /playback/state
 
 Clear the row entirely. Useful for an explicit "Stop and forget" UX (logout, "Clear playback" setting).
@@ -193,9 +266,9 @@ curl -X DELETE http://localhost:3000/api/v1/playback/state \
 
 Last-writer-wins is the simplest model the mobile app spec needs: "resume where I left off on this other device." Per-device rows would require a device-picker UI ("Transfer to iPhone") which isn't in scope for v1.
 
-### Why no WebSockets?
+### Push + polling
 
-A real-time push channel is a separate infrastructure concern (auth, reconnection, fan-out, backpressure). The cases that genuinely need push — simultaneous playback on two devices, "take over" gestures — are not in the v1 spec. The client reads on demand and the latency is imperceptible.
+Every successful `PUT /playback/state` (and every server-atomic `POST /playlists/:id/play` / `POST /albums/:id/play`) fans out to every connected device via [`/ws/playback`](./realtime.md). Clients that can't or don't maintain a socket fall back to `GET` on demand. See the [realtime doc](./realtime.md) for the Socket.IO handshake, auth, and guarantees.
 
 ### Why is the queue synced but shuffle / repeat are not?
 

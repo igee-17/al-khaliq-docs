@@ -1,0 +1,8 @@
+{
+  "label": "Profile",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "description": "Managing the logged-in user — read/update profile, change password/email, avatar upload, account deletion, and the audit log."
+  }
+}

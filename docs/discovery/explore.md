@@ -51,8 +51,6 @@ curl 'http://localhost:3000/api/v1/explore/genres/afrobeats?page=1&limit=20' \
 
 Up to 20 songs biased toward **genres outside** the user's top 3 recent genres — i.e. "discover something new". Falls back to editorial → popular for new users.
 
-Songs the user has marked **[not interested](../library/not-interested.md)** are filtered out of every tier.
-
 **Requires:** Bearer.
 
 ### Response — 200 OK
@@ -65,9 +63,22 @@ Up to 20 songs.
 
 ### How it's picked
 
-1. Compute the user's top 3 genres from plays last 30 days.
-2. Return songs whose genres don't overlap with those 3, ordered by `playCount DESC`, excluding anything already played.
-3. If fewer than 20 results: top up with `isEditorial` songs, then popular-last-7-days.
+1. Compute the user's top 3 genres from non-SKIPPED plays in the last 30 days.
+2. **Discovery tier:** return songs whose genres don't overlap with those 3, ordered by `playCount DESC`, excluding anything in the user's exclusion set.
+3. **Editorial tier:** if fewer than 20 results, top up with `isEditorial` songs.
+4. **Popular tier:** if still fewer than 20, top up with most-played-last-7-days.
+
+The exclusion set is the same as [quick-picks](./home.md#exclusion-set):
+
+- Songs played (any `THRESHOLD` or `COMPLETED` event).
+- Songs marked **[not interested](../library/not-interested.md)**.
+- Songs hit by the [over-skipped heuristic](./home.md#over-skipped-heuristic) (3 `SKIPPED` in 30 days).
+
+### Known nuance — fallback tiers don't re-apply genre filter
+
+The discovery tier excludes the user's top-3 genres, but the editorial and popular fallbacks don't re-check genre. So a user who has only ever played pop may still see the occasional pop song if discovery doesn't produce 20 results and a pop song is editorial-flagged or popular-last-7d. The discovery tier always runs first, so genre-matched results outrank fallbacks in the response order.
+
+If you want a stricter "never show me my top genres again" guarantee, filter client-side on top of this response.
 
 ### curl
 

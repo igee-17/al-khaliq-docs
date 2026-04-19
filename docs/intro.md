@@ -54,9 +54,10 @@ When exceeded you get a `429 Too Many Requests` in the standard error shape.
 - [Getting started](./getting-started.md) — how to call your first endpoint end-to-end
 - [Errors](./errors.md) — the error contract and how to handle each status
 - [Auth](/category/auth) — signup, login, Google/Apple, refresh, password reset
+- [Profile](/category/profile) — read/update profile, change password/email, avatar, delete account, audit log
 - [Catalog](/category/catalog) — song/artist/album/genre detail endpoints
-- [Discovery](/category/discovery) — home feeds, explore, search
-- [Playback](/category/playback) — HLS streaming, play events, recently played, cross-device now-playing sync
+- [Discovery](/category/discovery) — home feeds, explore, search (with genre filter)
+- [Playback](/category/playback) — HLS streaming, play events (THRESHOLD / COMPLETED / SKIPPED), recently played, cross-device now-playing sync, real-time push, play-all
 - [Library](/category/library) — playlists, liked songs, saved playlists, sharing, recommendations
 - [Admin API](/category/admin-api) — everything under `/admin/*` for the web admin panel
 
