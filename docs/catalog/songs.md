@@ -77,7 +77,7 @@ curl http://localhost:3000/api/v1/songs/42 \
 - **+5 points per shared genre**.
 - Tie-break by `playCount DESC`.
 
-Excludes the song itself and anything unpublished / not-ready.
+Excludes the song itself, anything unpublished / not-ready, and songs the user has marked **[not interested](../library/not-interested.md)**.
 
 **Requires:** Bearer.
 

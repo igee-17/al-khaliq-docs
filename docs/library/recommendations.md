@@ -18,7 +18,7 @@ Up to 20 songs matched to the playlist's content.
 [ PublicSongDto, PublicSongDto, ... ]
 ```
 
-Up to 20 songs. Never includes songs already in the playlist.
+Up to 20 songs. Never includes songs already in the playlist, nor songs the caller has marked **[not interested](./not-interested.md)**.
 
 ### Algorithm
 

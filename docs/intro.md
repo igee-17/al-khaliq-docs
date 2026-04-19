@@ -56,7 +56,7 @@ When exceeded you get a `429 Too Many Requests` in the standard error shape.
 - [Auth](/category/auth) — signup, login, Google/Apple, refresh, password reset
 - [Catalog](/category/catalog) — song/artist/album/genre detail endpoints
 - [Discovery](/category/discovery) — home feeds, explore, search
-- [Playback](/category/playback) — HLS streaming, play events, recently played
+- [Playback](/category/playback) — HLS streaming, play events, recently played, cross-device now-playing sync
 - [Library](/category/library) — playlists, liked songs, saved playlists, sharing, recommendations
 - [Admin API](/category/admin-api) — everything under `/admin/*` for the web admin panel
 

@@ -44,6 +44,8 @@ Up to 20 songs personalised for this user. The algorithm:
 
 New users (no plays yet) go straight to editorial → popular. Returning users never see songs they've already played.
 
+Songs the user has marked **[not interested](../library/not-interested.md)** are filtered out of every tier.
+
 **Requires:** Bearer.
 
 ### Response — 200 OK

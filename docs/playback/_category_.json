@@ -3,6 +3,6 @@
   "position": 7,
   "link": {
     "type": "generated-index",
-    "description": "HLS streaming, play events, recently played, and the client/server split for queue + shuffle + repeat."
+    "description": "HLS streaming, play events, recently played, cross-device now-playing sync, and the client/server split for queue + shuffle + repeat."
   }
 }

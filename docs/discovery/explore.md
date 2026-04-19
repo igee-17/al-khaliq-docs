@@ -51,6 +51,8 @@ curl 'http://localhost:3000/api/v1/explore/genres/afrobeats?page=1&limit=20' \
 
 Up to 20 songs biased toward **genres outside** the user's top 3 recent genres — i.e. "discover something new". Falls back to editorial → popular for new users.
 
+Songs the user has marked **[not interested](../library/not-interested.md)** are filtered out of every tier.
+
 **Requires:** Bearer.
 
 ### Response — 200 OK

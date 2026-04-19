@@ -3,6 +3,6 @@
   "position": 8,
   "link": {
     "type": "generated-index",
-    "description": "The user's personal library \u2014 liked songs, their own playlists, playlists they've saved, admin-curated playlists. Plus sharing and recommendations."
+    "description": "The user's personal library \u2014 playlists, liked songs, pins, not-interested, downloads, sharing, and recommendations."
   }
 }
