@@ -77,8 +77,8 @@ Render under "Account > Recent activity". Map each action to a human label:
 | Action | Label |
 |---|---|
 | `PASSWORD_CHANGED` | "Password changed" |
-| `EMAIL_CHANGE_REQUESTED` | "Email change requested (→ {newEmail})" |
-| `EMAIL_CHANGED` | "Email changed to {newEmail}" |
+| `EMAIL_CHANGE_REQUESTED` | "Email change requested (→ \{newEmail\})" |
+| `EMAIL_CHANGED` | "Email changed to \{newEmail\}" |
 | `PROFILE_DELETED` | Not shown (the account is gone by the time you'd read this) |
 | `AVATAR_CHANGED` | "Profile picture updated" |
 | `AVATAR_DELETED` | "Profile picture removed" |
