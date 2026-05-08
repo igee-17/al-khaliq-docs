@@ -14,12 +14,14 @@ Full list of genres.
 
 ```json
 [
-  { "id": 1, "name": "Afrobeats", "slug": "afrobeats" },
-  { "id": 2, "name": "Pop",       "slug": "pop" },
-  { "id": 3, "name": "Rap",       "slug": "rap" },
-  { "id": 4, "name": "R&B",       "slug": "r-b" }
+  { "id": 1, "name": "Afrobeats", "slug": "afrobeats", "imageKey": "genre-images/afrobeats.jpg" },
+  { "id": 2, "name": "Pop",       "slug": "pop",       "imageKey": null },
+  { "id": 3, "name": "Rap",       "slug": "rap",       "imageKey": null },
+  { "id": 4, "name": "R&B",       "slug": "r-b",       "imageKey": null }
 ]
 ```
+
+- `imageKey` — S3 key for the genre's cover image. Null if not set. Use for genre cards on the Explore tab.
 
 Genres are small (~10–30 rows). No pagination.
 

@@ -88,6 +88,15 @@ POST /admin/genres
 
 - Unique by `name` and by `slug`.
 - `slug` auto-generated if omitted.
+- `imageKey` — optional S3 key for the genre's cover image. Set via PATCH after uploading.
+
+List response shape:
+
+```json
+[
+  { "id": 1, "name": "Afrobeats", "slug": "afrobeats", "imageKey": "genre-images/afrobeats.jpg", "createdAt": "…" }
+]
+```
 
 List is not paginated — genres are a small set.
 
@@ -95,7 +104,7 @@ Delete refuses with 400 if songs reference it.
 
 ## Image uploads
 
-For artist/album images, ask for a presigned PUT URL, then upload to S3 directly — identical pattern to song uploads but smaller and simpler. Endpoint (not built yet at time of writing):
+For artist, album, genre, and song cover images, ask for a presigned PUT URL, then upload to S3 directly — identical pattern to audio uploads but smaller and simpler. Endpoint (not built yet at time of writing):
 
 ```
 POST /admin/uploads/image-url
@@ -108,7 +117,7 @@ Response (planned):
 { "uploadUrl": "...", "key": "images/tmp/<uuid>.jpg", "expiresAt": "..." }
 ```
 
-Then set that `key` as `imageKey` / `coverImageKey` on the artist / album via PATCH.
+Then set that `key` as `imageKey` / `coverImageKey` on the artist / album / genre / song via PATCH.
 
 ## Slug rules
 

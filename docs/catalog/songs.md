@@ -14,6 +14,7 @@ Returned by every endpoint that produces songs for the mobile client:
   "title": "Anybody",
   "slug": "anybody",
   "duration": 247,
+  "imageKey": "song-images/42/cover.jpg",
   "primaryArtist": {
     "id": 7,
     "name": "Burna Boy",
@@ -30,7 +31,7 @@ Returned by every endpoint that produces songs for the mobile client:
     { "id": 9, "name": "Wizkid", "slug": "wizkid", "imageKey": null }
   ],
   "genres": [
-    { "id": 3, "name": "Afrobeats", "slug": "afrobeats" }
+    { "id": 3, "name": "Afrobeats", "slug": "afrobeats", "imageKey": null }
   ],
   "playCount": 142,
   "releasedAt": "2019-07-26T00:00:00.000Z"
@@ -38,6 +39,7 @@ Returned by every endpoint that produces songs for the mobile client:
 ```
 
 - `duration` — seconds. Null while the song is still transcoding (not visible to the public anyway).
+- `imageKey` — direct cover image for the song itself (independent of the album cover). Null if not set. Use `album.coverImageKey` as fallback in the player UI.
 - `album` — null if the song isn't part of an album.
 - `releasedAt` — the album's release date if set, otherwise the song's creation date. Use this for "released in" labels.
 - `imageKey` / `coverImageKey` — S3 keys relative to the media bucket (see [Image URLs](#image-urls) below).

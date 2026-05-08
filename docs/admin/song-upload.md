@@ -45,7 +45,8 @@ Creates a row in `PENDING_UPLOAD` state.
   "primaryArtistId": 7,
   "albumId": 2,
   "featuredArtistIds": [9],
-  "genreIds": [3]
+  "genreIds": [3],
+  "isEditorial": false
 }
 ```
 
@@ -58,7 +59,34 @@ Creates a row in `PENDING_UPLOAD` state.
 
 ### Response — 201 Created
 
-Full `SongResponseDto` — admin-flavoured, includes `status`, `sourceS3Key`, `hlsManifestKey`, `bitrates`, `isEditorial`, `mediaConvertJobId`, `failureReason`, `publishedAt`.
+Full `SongResponseDto`:
+
+```json
+{
+  "id": 42,
+  "title": "Anybody",
+  "slug": "anybody",
+  "duration": null,
+  "imageKey": null,
+  "primaryArtistId": 7,
+  "albumId": 2,
+  "status": "PENDING_UPLOAD",
+  "sourceS3Key": null,
+  "hlsManifestKey": null,
+  "bitrates": [],
+  "playCount": 0,
+  "isEditorial": false,
+  "mediaConvertJobId": null,
+  "failureReason": null,
+  "publishedAt": null,
+  "featuredArtists": [{ "id": 9, "name": "Wizkid" }],
+  "genres": [{ "id": 3, "name": "Afrobeats" }],
+  "createdAt": "2026-05-08T12:00:00.000Z",
+  "updatedAt": "2026-05-08T12:00:00.000Z"
+}
+```
+
+- `imageKey` — direct cover image for the song, independent of the album cover. Set via `PATCH /admin/songs/:id` after uploading an image.
 
 ### Edge cases
 
@@ -230,6 +258,8 @@ Full admin DTO with all internal fields.
 
 ### PATCH /admin/songs/:id — update metadata
 
-Fields: `title`, `slug`, `albumId` (set `null` to detach), `featuredArtistIds`, `genreIds`, `isEditorial`.
+Fields: `title`, `slug`, `albumId` (set `null` to detach), `featuredArtistIds`, `genreIds`, `isEditorial`, `imageKey`.
 
 `featuredArtistIds` and `genreIds` are **replace-whole** — the array you send becomes the new set.
+
+`imageKey` is the S3 key of a cover image uploaded via `POST /admin/uploads/image-url` (set to `null` to clear).
